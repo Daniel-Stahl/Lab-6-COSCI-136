@@ -1,21 +1,20 @@
 #include <string>
 #include <iostream>
-#define orderSize 0
-#define deliverySize 0
+#define stackSize 10
 using namespace std;
 
 class Order {
 public:
     Order();
-    Order(string newID, int newItem);
-    void SetOrder(string ID, int items);
+    Order(string newID, int newItem, double newPrice);
+    void SetOrder(string ID, int items, double price);
     string GetOrderID() const;
     int GetOrderItems() const;
     
 private:
     string orderID;
     int orderItems;
-    double price;
+    double orderPrice;
 };
 
 class Delivery {
@@ -29,20 +28,37 @@ public:
 private:
     string deliveryID;
     int deliveryItems;
+    double cost;
+    double total;
     
 };
 
-class WarehouseStack {
+class Inventory {
 public:
-    WarehouseStack();
+    Inventory();
+    Inventory(int numItems, double newPrice);
+    void SetInventory(int items, double price);
+    
+private:
+    int numItems;
+    double cost;
+    
+};
+
+class OrdersStack {
+public:
+    OrdersStack();
     bool IsEmpty() const;
     bool IsFull() const;
     void Push(Order newOrder);
     
 private:
     int top;
-    Order orders[orderSize];
-    Delivery deliveries[deliverySize];
+    Order orders[stackSize];
+    
+};
+
+class ItemStack {
     
 };
 
@@ -56,13 +72,14 @@ int main() {
 
 Order::Order(){};
 
-Order::Order(string newID, int newItems) {
-    SetOrder(newID, newItems);
+Order::Order(string newID, int newItems, double newPrice) {
+    SetOrder(newID, newItems, newPrice);
 }
 
-void Order::SetOrder(string ID, int items) {
+void Order::SetOrder(string ID, int items, double price) {
     orderID = ID;
     orderItems = items;
+    orderPrice = price;
 }
 
 string Order::GetOrderID() const {
@@ -104,19 +121,22 @@ int Delivery::GetDeliveryItems() const {
  ******* WAREHOUSE STACK CLASS *******
 */
 
-WarehouseStack::WarehouseStack() { top = -1; };
+OrdersStack::OrdersStack() { top = -1; };
 
-bool WarehouseStack::IsEmpty() const {
+bool OrdersStack::IsEmpty() const {
     return top == -1;
 }
 
-bool WarehouseStack::IsFull() const {
-    return top == orderSize - 1;
+bool OrdersStack::IsFull() const {
+    return top == stackSize - 1;
 }
 
-void WarehouseStack::Push(Order newOrder) {
-    if (IsEmpty()) {
-        <#statements#>
+void OrdersStack::Push(Order newOrder) {
+    if (IsFull()) {
+        cout << "Cant add anymore orders to the stack\n";
+    } else {
+        top++;
+        orders[top] = newOrder;
     }
 }
 
