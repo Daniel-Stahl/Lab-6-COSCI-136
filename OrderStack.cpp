@@ -9,7 +9,7 @@ bool OrderStack::IsEmpty() const {
 }
 
 bool OrderStack::IsFull() const {
-    return top == stackSize - 1;
+    return top == STACK_SIZE - 1;
 }
 
 void OrderStack::Push(Order newOrder) {
@@ -20,3 +20,15 @@ void OrderStack::Push(Order newOrder) {
         orders[top] = newOrder;
     }
 }
+
+void OrderStack::Pop() {
+    if (IsEmpty())
+        cout << "Stack is empty\n";
+    top--;
+};
+
+Order OrderStack::Peek() {
+    if (IsEmpty())
+        cout << "Stack is empty\n";
+    return orders[top];
+};
