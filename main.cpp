@@ -9,14 +9,12 @@ int main() {
     Order order;
     int numItems;
     double price = 0.0;
-    string id;
     int x = 0;
     
     while (x < 10) {
         numItems = x;
         price = 1.0 + price;
-        id = "a" + to_string(x);
-        order.SetOrder(id, numItems, price);
+        order.SetOrder(numItems, price);
         orderStack.Push(order);
         x++;
     }

@@ -1,21 +1,25 @@
 #include "Order.hpp"
 
-Order::Order(){};
+Order::Order(){orderID = 0;};
 
-Order::Order(string newID, int newItems, double newPrice) {
-    SetOrder(newID, newItems, newPrice);
+Order::Order(int newItems, double newPrice) {
+    SetOrder(newItems, newPrice);
 }
 
-void Order::SetOrder(string ID, int items, double price) {
-    orderID = ID; // Set id automatically
+void Order::SetOrder(int items, double price) {
+    orderID = GenerateOrderID();
     orderItems = items;
     orderPrice = price;
 }
 
-string Order::GetOrderID() const {
+int Order::GetOrderID() const {
     return orderID;
 };
 
 int Order::GetOrderItems() const {
     return orderItems;
+};
+
+int Order::GenerateOrderID() {
+    return orderID + 1;
 };
