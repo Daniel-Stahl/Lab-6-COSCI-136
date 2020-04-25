@@ -20,6 +20,10 @@ int Order::GetOrderItems() const {
     return orderItems;
 };
 
+int Order::GetOrderPrice() const {
+    return orderPrice;
+};
+
 int Order::GenerateOrderID() {
     return orderID + 1;
 };

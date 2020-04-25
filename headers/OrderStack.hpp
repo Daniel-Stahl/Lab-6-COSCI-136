@@ -7,7 +7,6 @@ using namespace std;
 
 class OrderStack {
 public:
-    
     OrderStack();
     bool IsEmpty() const;
     bool IsFull() const;
