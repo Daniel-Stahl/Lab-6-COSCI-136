@@ -24,6 +24,10 @@ double Deliveries::GetCostPerItem() const {
     return costPer;
 }
 
+void Deliveries::SetDeliveryItems(int newItemNum) {
+    numItems -= newItemNum;
+};
+
 int Deliveries::GenerateDeliveryID() {
     return deliveryID + 1;
 };

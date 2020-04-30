@@ -8,7 +8,7 @@ Order::Order(int newItems, double newPrice) {
 
 void Order::SetOrder(int items, double price) {
     orderID = GenerateOrderID();
-    orderItems = items;
+    qtyNotFilled = items;
     orderPrice = price;
 }
 
@@ -17,11 +17,19 @@ int Order::GetOrderID() const {
 };
 
 int Order::GetOrderItems() const {
-    return orderItems;
+    return qty;
 };
 
 int Order::GetOrderPrice() const {
     return orderPrice;
+};
+
+int Order::GetQtyNotFilled() const {
+    return qtyNotFilled;
+};
+
+void Order::SetOrderQty(int newQty) {
+    qty += newQty;
 };
 
 int Order::GenerateOrderID() {

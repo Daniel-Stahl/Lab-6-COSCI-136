@@ -8,10 +8,11 @@ public:
     int GetDeliveryID() const;
     int GetDeliveryItems() const;
     double GetCostPerItem() const;
-    int GenerateDeliveryID();
+    void SetDeliveryItems(int newItemNum);
     
 private:
     int deliveryID;
     int numItems;
     double costPer;
+    int GenerateDeliveryID();
 };

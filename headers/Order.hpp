@@ -10,10 +10,13 @@ public:
     int GetOrderID() const;
     int GetOrderItems() const;
     int GetOrderPrice() const;
-    int GenerateOrderID();
+    int GetQtyNotFilled() const;
+    void SetOrderQty(int newQty);
     
 private:
     int orderID;
-    int orderItems;
+    int qty = 0;
     double orderPrice;
+    int qtyNotFilled;
+    int GenerateOrderID();
 };
