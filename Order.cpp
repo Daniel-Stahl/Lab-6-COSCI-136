@@ -25,7 +25,7 @@ int Order::GetOrderPrice() const {
 };
 
 int Order::GetQtyNotFilled() const {
-    return qtyNotFilled;
+    return qtyNotFilled - qty;
 };
 
 void Order::SetOrderQty(int newQty) {

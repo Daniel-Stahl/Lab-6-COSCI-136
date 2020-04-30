@@ -19,10 +19,10 @@ void MainMenu() {
     InventoryStack inventory;
     Deliveries delivery;
     
-    order.SetOrder(3, 1.50);
+    order.SetOrder(11, 1.50);
     orders.Push(order);
     
-    order.SetOrder(11, 1.50);
+    order.SetOrder(3, 1.50);
     orders.Push(order);
     
     delivery.SetDeliveries(10, 2.00);
@@ -36,7 +36,7 @@ void MainMenu() {
     
     warehouse.FillOrder(orders, inventory);
     
-    cout << "Orders: " << orderA.GetQtyNotFilled() << "\n";
+    //cout << "Orders: " << orderA.GetQtyNotFilled() << "\n";
     
     //warehouse.FillOrder(orders, inventory);
     

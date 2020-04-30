@@ -25,20 +25,25 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
             // Send order to shipping
         }
         
-        if (order.GetQtyNotFilled() != order.GetOrderItems() && inventory.IsEmpty()) {
+        if (!IsOrderFilled(order) && inventory.IsEmpty()) {
             cout << "Order needs " << qtyMissing << " more items\n";
             Order orderTemp = order;
             orders.Pop();
             orders.Push(orderTemp);
         } else {
             cout << "Order filled!\n";
+            orders.Pop();
         }
     };
     
-};
+}
 
 bool Warehouse::IsOrderFilled(Order order) const {
-    if (order.GetQtyNotFilled() == order.GetOrderItems())
+    if (order.GetQtyNotFilled() == 0)
         return true;
     return false;
+}
+
+void Warehouse::SendOrderToShipping(Order order) {
+    
 }
