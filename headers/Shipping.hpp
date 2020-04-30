@@ -12,8 +12,14 @@ public:
     
     
 private:
-    int shipmentID;
-    Order order[SHIPPING_SIZE];
+    struct OrderShipped {
+        int shipmentId;
+        Order order;
+    };
+    
+    int sizeOfArray;
+    OrderShipped shipping[];
+    
     
     
     

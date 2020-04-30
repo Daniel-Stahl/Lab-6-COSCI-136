@@ -31,7 +31,8 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
             orders.Pop();
             orders.Push(orderTemp);
         } else {
-            cout << "Order filled!\n";
+            cout << "Sending Order to shipping!\n";
+            shipping.AddOrderToShippments(order);
             orders.Pop();
         }
     };
@@ -39,7 +40,7 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
 }
 
 bool Warehouse::IsOrderFilled(Order order) const {
-    if (order.GetQtyNotFilled() == 0)
+    if (order.GetQtyNotFilled() == order.GetOrderItems())
         return true;
     return false;
 }

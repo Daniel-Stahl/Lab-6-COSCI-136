@@ -1,6 +1,6 @@
 #include "Shipping.hpp"
 
-Shipping::Shipping(){ shipmentID = 0; }
+Shipping::Shipping(){ sizeOfArray = -1; }
 
 void Shipping::DisplayShipments() {
     
@@ -16,4 +16,10 @@ void Shipping::DisplayShipments() {
 
 void Shipping::AddOrderToShippments(Order order) {
     // Add order to shipping array
+    sizeOfArray += 1;
+    
+    OrderShipped newShipment;
+    newShipment.order = order;
+    
+    shipping[sizeOfArray] = newShipment;
 }

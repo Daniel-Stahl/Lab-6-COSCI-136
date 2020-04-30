@@ -40,7 +40,7 @@ void MainMenu() {
     
     //warehouse.FillOrder(orders, inventory);
     
-    Order orderB = orders.Peek();
+    //Order orderB = orders.Peek();
     
-    cout << "Orders: " << orderB.GetQtyNotFilled() << "\n";
+    //cout << "Orders: " << orderB.GetQtyNotFilled() << "\n";
 }

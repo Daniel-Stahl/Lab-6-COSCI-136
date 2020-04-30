@@ -1,6 +1,6 @@
 #include "Order.hpp"
 
-Order::Order(){orderID = 0;};
+Order::Order(){orderID = 0; qty = 0;};
 
 Order::Order(int newItems, double newPrice) {
     SetOrder(newItems, newPrice);
@@ -25,7 +25,7 @@ int Order::GetOrderPrice() const {
 };
 
 int Order::GetQtyNotFilled() const {
-    return qtyNotFilled - qty;
+    return qtyNotFilled;
 };
 
 void Order::SetOrderQty(int newQty) {
