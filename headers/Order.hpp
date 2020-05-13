@@ -8,13 +8,15 @@ using namespace std;
 class Order {
 public:
     Order();
-    Order(int newItem, double newPrice);
-    void SetOrder(int items, double price);
+    Order(int newItem);
+    void SetOrder(int items);
     int GetOrderID() const;
     int GetOrderItems() const;
     int GetOrderPrice() const;
+    void SetOrderPrice(double newPrice);
     int GetQtyNotFilled() const;
     void SetOrderQty(int newQty);
+    void SetQtyNotFilled(int missing);
     
 private:
     int orderID;

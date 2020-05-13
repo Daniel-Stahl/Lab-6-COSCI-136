@@ -1,24 +1,28 @@
 #include "Order.hpp"
+#include "Deliveries.hpp"
 #include <iostream>
 #define SHIPPING_SIZE 20
+#define DELIVERY_SIZE 10
 
 using namespace std;
 
 class Shipping {
 public:
     Shipping();
-    void AddOrderToShippments(Order order);
+    void AddOrderToShippments(Order order, Deliveries delivery);
     void DisplayShipments();
+    bool IsOrderUnique(Order order, int& arrayPos);
     
     
 private:
     struct OrderShipped {
         int shipmentId;
         Order order;
+        Deliveries deliveries[DELIVERY_SIZE];
     };
     
     int sizeOfArray;
-    OrderShipped shipping[];
+    OrderShipped shipping[SHIPPING_SIZE];
     
     
     

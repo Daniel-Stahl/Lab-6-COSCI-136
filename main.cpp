@@ -19,13 +19,12 @@ void MainMenu() {
     InventoryStack inventory;
     Deliveries delivery;
     
-    order.SetOrder(11, 1.50);
+   
+    
+    order.SetOrder(3);
     orders.Push(order);
     
-    order.SetOrder(3, 1.50);
-    orders.Push(order);
-    
-    delivery.SetDeliveries(10, 2.00);
+    delivery.SetDeliveries(1, 2.00);
     inventory.Push(delivery);
     
     Order orderA = orders.Peek();

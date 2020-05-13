@@ -13,9 +13,6 @@ public:
     void SendOrderToShipping(Order order);
     
 private:
-    OrderStack orders;
-    InventoryStack inventory;
-    Deliveries delivery;
     Shipping shipping;
     
 };
