@@ -22,6 +22,7 @@ private:
     };
     
     int sizeOfArray;
+    int sizeOfDel;
     OrderShipped shipping[SHIPPING_SIZE];
     
     

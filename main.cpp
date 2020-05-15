@@ -17,15 +17,19 @@ void MainMenu() {
     OrderStack orders;
     Order order;
     InventoryStack inventory;
-    Deliveries delivery;
+    Deliveries deliveryA;
+    Deliveries deliveryB;
     
    
     
     order.SetOrder(3);
     orders.Push(order);
     
-    delivery.SetDeliveries(1, 2.00);
-    inventory.Push(delivery);
+    deliveryA.SetDeliveries(1, 2.00);
+    inventory.Push(deliveryA);
+    
+    deliveryB.SetDeliveries(2, 2.00);
+    inventory.Push(deliveryB);
     
     Order orderA = orders.Peek();
     

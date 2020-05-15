@@ -1,6 +1,6 @@
 #include "Shipping.hpp"
 
-Shipping::Shipping(){ sizeOfArray = -1; }
+Shipping::Shipping(){ sizeOfArray = -1; sizeOfDel = -1; }
 
 void Shipping::DisplayShipments() {
     
@@ -24,17 +24,26 @@ void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
     int position;
     sizeOfArray += 1;
     
+    
     if (!IsOrderUnique(order, position)) {
-        
+        sizeOfDel = 0;
         OrderShipped newShipment;
         newShipment.order = order;
-        newShipment.deliveries[sizeOfArray] = delivery;
+        newShipment.deliveries[sizeOfDel] = delivery;
         shipping[sizeOfArray] = newShipment;
     } else {
-        shipping[position].deliveries[sizeOfArray] = delivery;
+        sizeOfDel += 1;
+        shipping[position].deliveries[sizeOfDel] = delivery;
     }
     
     
+    
+    
+    int x = 0;
+    
+    for (x = 0; x < sizeOfDel; x++) {
+        cout << "Order ID: " << shipping[sizeOfArray].order.GetOrderID() << " items: " << shipping[sizeOfArray].order.GetOrderItems() << "\n" << "Delivery ID: " << shipping[sizeOfArray].deliveries[x].GetDeliveryID() << " QTY: " << shipping[sizeOfArray].deliveries[x].GetDeliveryItems() << "\n";
+    }
     
     
 }
