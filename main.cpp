@@ -16,29 +16,54 @@ void MainMenu() {
     Warehouse warehouse;
     OrderStack orders;
     Order order;
-    Order orderB;
     InventoryStack inventory;
-    Deliveries deliveryA;
-    Deliveries deliveryB;
+    Deliveries delivery;
+    int userChoice;
     
-   
-    
-    order.SetOrder(3);
-    orders.Push(order);
-    
-    orderB.SetOrder(1);
-    orders.Push(orderB);
-    
-    deliveryA.SetDeliveries(1, 2.00);
-    inventory.Push(deliveryA);
-    
-    deliveryB.SetDeliveries(3, 2.00);
-    inventory.Push(deliveryB);
-    
-    cout << "Main Menu\n 1) Create Order\n 2) Recieve Delivery\n 3) Fill Order\n";
-    
-    warehouse.FillOrder(orders, inventory);
-    warehouse.FillOrder(orders, inventory);
+    do {
+
+        cout << "Main Menu\n 1) Create Order\n 2) Recieve Delivery\n 3) Fill Order\n 4) Exit program\n Choice: ";
+        cin >> userChoice;
+        
+        switch (userChoice) {
+            case 1:
+                // Create Order
+                int numOfItems;
+                
+                cout << "How many items ordered? ";
+                cin >> numOfItems;
+                
+                order.SetOrder(numOfItems);
+                orders.Push(order);
+                
+                break;
+            case 2:
+                // Recieve Delivery
+                int itemRecieved;
+                double itemCost;
+                
+                cout << "How many items in delivery? ";
+                cin >> itemRecieved;
+                
+                cout << "Cost per item? ";
+                cin >> itemCost;
+                
+                delivery.SetDeliveries(itemRecieved, itemCost);
+                inventory.Push(delivery);
+                
+                break;
+            case 3:
+                // Fill order
+                cout << "Filling order initiated\n";
+                
+                warehouse.FillOrder(orders, inventory);
+                
+                break;
+            default:
+                break;
+        }
+        
+    } while (userChoice != 4);
     
     
 }

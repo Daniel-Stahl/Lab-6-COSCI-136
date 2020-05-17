@@ -39,7 +39,7 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
             cout << "Order# " << orderID << " needs " << qtyMissing << " more item(s)\n";
             // Grab new item
             item = inventory.Peek();
-            
+            items = item.GetDeliveryItems();
 
         } else if(IsOrderFilled(order) && !inventory.IsEmpty()) {
             cout << "Sending Order# " << orderID << " to shipping!\n";

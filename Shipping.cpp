@@ -2,16 +2,15 @@
 
 Shipping::Shipping(){ sizeOfArray = -1; sizeOfDel = -1; }
 
-void Shipping::DisplayShipments() {
-    int x = 0;
-    int y = 0;
-    for (x = 0; x <= sizeOfArray; x++) {
-        cout << "Order ID: " << shipping[x].order.GetOrderID() << " items: " << shipping[x].order.GetOrderItems() << " Missing: " << shipping[x].order.GetQtyNotFilled() << "\n";
-        
-        for (y = 0; y <= sizeOfDel; y++) {
-            cout << "Delivery ID: " << shipping[x].deliveries[y].GetDeliveryID() << " QTY: " << shipping[x].deliveries[y].GetDeliveryItems() << "\n";
-        }
+void Shipping::DisplayShipments(int pos, int deliverySize) {
+    int y;
+    
+    cout << "Order ID: " << shipping[pos].order.GetOrderID() << " items: " << shipping[pos].order.GetOrderItems() << " Missing: " << shipping[pos].order.GetQtyNotFilled() << "\n";
+    
+    for (y = 0; y <= deliverySize; y++) {
+        cout << "Delivery ID: " << shipping[pos].deliveries[y].GetDeliveryID() << " QTY: " << shipping[pos].deliveries[y].GetDeliveryItems() << "\n";
     }
+    
 }
 
 void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
@@ -36,7 +35,7 @@ void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
         shipping[position].deliveries[sizeOfDel] = delivery;
     }
     
-    DisplayShipments();
+    DisplayShipments(position, sizeOfDel);
     
 //    int x = 0;
 //    int y = 0;

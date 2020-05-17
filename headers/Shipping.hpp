@@ -10,7 +10,7 @@ class Shipping {
 public:
     Shipping();
     void AddOrderToShippments(Order order, Deliveries delivery);
-    void DisplayShipments();
+    void DisplayShipments(int pos, int deliverySize);
     bool IsOrderUnique(Order order, int& arrayPos);
     
     
