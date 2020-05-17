@@ -1,6 +1,6 @@
 #include "Order.hpp"
 
-Order::Order(){orderID = 0; qty = 0; orderPrice = 0;};
+Order::Order(){qty = 0; orderPrice = 0;};
 
 Order::Order(int newItems) {
     SetOrder(newItems);
@@ -40,5 +40,6 @@ void Order::SetQtyNotFilled(int missing) {
 }
 
 int Order::GenerateOrderID() {
-    return orderID + 1;
+    static int num = 0;
+    return ++num;
 }

@@ -1,6 +1,6 @@
 #include "Deliveries.hpp"
 
-Deliveries::Deliveries(){deliveryID = 0;};
+Deliveries::Deliveries(){};
 
 Deliveries::Deliveries(int items, double cost) {
     SetDeliveries(items, cost);
@@ -25,9 +25,10 @@ double Deliveries::GetCostPerItem() const {
 }
 
 void Deliveries::SetDeliveryItems(int newItemNum) {
-    numItems -= newItemNum;
+    numItems = newItemNum;
 };
 
 int Deliveries::GenerateDeliveryID() {
-    return deliveryID + 1;
+    static int num = 0;
+    return ++num;
 };

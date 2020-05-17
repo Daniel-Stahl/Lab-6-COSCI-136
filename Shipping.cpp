@@ -3,15 +3,15 @@
 Shipping::Shipping(){ sizeOfArray = -1; sizeOfDel = -1; }
 
 void Shipping::DisplayShipments() {
-    
-    
-    
-    // Show data like this
-   /* Delivery #    Qty Shipped    Unit Price    Cost to the Warehouse    Cost to the Customer
-           621              5           2.5                     12.5                   18.75
-           620              3          1.75                     5.25                    7.88
-           619              2          5.25                     10.5                   15.75
-   */
+    int x = 0;
+    int y = 0;
+    for (x = 0; x <= sizeOfArray; x++) {
+        cout << "Order ID: " << shipping[x].order.GetOrderID() << " items: " << shipping[x].order.GetOrderItems() << " Missing: " << shipping[x].order.GetQtyNotFilled() << "\n";
+        
+        for (y = 0; y <= sizeOfDel; y++) {
+            cout << "Delivery ID: " << shipping[x].deliveries[y].GetDeliveryID() << " QTY: " << shipping[x].deliveries[y].GetDeliveryItems() << "\n";
+        }
+    }
 }
 
 void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
@@ -21,11 +21,10 @@ void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
     // if it is then add order and delivery
     // if it is NOT unique then return order position and add delivery to order
     
-    int position;
-    sizeOfArray += 1;
-    
+    int position = 0;
     
     if (!IsOrderUnique(order, position)) {
+        sizeOfArray += 1;
         sizeOfDel = 0;
         OrderShipped newShipment;
         newShipment.order = order;
@@ -33,17 +32,21 @@ void Shipping::AddOrderToShippments(Order order, Deliveries delivery) {
         shipping[sizeOfArray] = newShipment;
     } else {
         sizeOfDel += 1;
+        shipping[position].order = order;
         shipping[position].deliveries[sizeOfDel] = delivery;
     }
     
+    DisplayShipments();
     
-    
-    
-    int x = 0;
-    
-    for (x = 0; x < sizeOfDel; x++) {
-        cout << "Order ID: " << shipping[sizeOfArray].order.GetOrderID() << " items: " << shipping[sizeOfArray].order.GetOrderItems() << "\n" << "Delivery ID: " << shipping[sizeOfArray].deliveries[x].GetDeliveryID() << " QTY: " << shipping[sizeOfArray].deliveries[x].GetDeliveryItems() << "\n";
-    }
+//    int x = 0;
+//    int y = 0;
+//    for (x = 0; x <= sizeOfArray; x++) {
+//        cout << "Order ID: " << shipping[x].order.GetOrderID() << " items: " << shipping[x].order.GetOrderItems() << " Missing: " << shipping[x].order.GetQtyNotFilled() << "\n";
+//
+//        for (y = 0; y <= sizeOfDel; y++) {
+//            cout << "Delivery ID: " << shipping[x].deliveries[y].GetDeliveryID() << " QTY: " << shipping[x].deliveries[y].GetDeliveryItems() << "\n";
+//        }
+//    }
     
     
 }
