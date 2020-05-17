@@ -1,8 +1,8 @@
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include "OrderStack.hpp"
 #include "InventoryStack.hpp"
-#include "Shipping.hpp"
 
 using namespace std;
 
@@ -10,9 +10,9 @@ class Warehouse {
 public:
     void FillOrder(OrderStack& orders, InventoryStack& inventory);
     bool IsOrderFilled(Order order) const;
-    void SendOrderToShipping(Order order);
+    void PrintOrderDetails(Order order, int shipment, Deliveries deliveriesUsed[]);
     
 private:
-    Shipping shipping;
+    int arraySize;
     
 };
