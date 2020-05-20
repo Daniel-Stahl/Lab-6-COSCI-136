@@ -36,12 +36,10 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
         
         
         if (!IsOrderFilled(order) && !inventory.IsEmpty()) {
-            //cout << "Order# " << orderID << " needs " << qtyMissing << " more item(s)\n";
-            
             item = inventory.Peek();
             items = item.GetDeliveryItems();
 
-        } else if(IsOrderFilled(order) && !inventory.IsEmpty()) {
+        } else if(IsOrderFilled(order)) {
             cout << "Sending Order# " << orderID << " to shipping!\n";
             orders.Pop();
             // Order gets popped off the stack and exit
@@ -67,7 +65,7 @@ void Warehouse::PrintOrderDetails(Order order, int shipment, Deliveries deliveri
     double customerCost = 0;
     
     for (int x = 0; x <= arraySize; x++) {
-        warehouseCost += deliveriesUsed[x].GetCostPerItem() + deliveriesUsed[x].GetDeliveryItems();
+        warehouseCost += deliveriesUsed[x].GetCostPerItem() * deliveriesUsed[x].GetDeliveryItems();
         customerCost += ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems();
     }
     
@@ -80,12 +78,12 @@ void Warehouse::PrintOrderDetails(Order order, int shipment, Deliveries deliveri
     << "\nProfit this Shipment: " << customerCost - warehouseCost
     << "\n";
     
-    cout << "Shipment Details:\n"
-    << "Delivery #" << setw(15) << "Qty Shipped" << setw(15) << "Unit Price" << setw(15) << "Cost to the Warehouse" << setw(15) << setw(15) << "Cost to the Customer\n";
+    cout << "\nShipment Details:\n"
+    << "Delivery #" << setw(15) << "Qty Shipped" << setw(15) << "Unit Price" << setw(25) << "Cost to the Warehouse" << setw(25) << setw(25) << "Cost to the Customer\n";
     
     for (int x = 0; x <= arraySize; x++) {
-        cout << right << deliveriesUsed[x].GetDeliveryID() << setw(15) << deliveriesUsed[x].GetDeliveryItems() << setw(15) << deliveriesUsed[x].GetCostPerItem() << setw(15) << deliveriesUsed[x].GetCostPerItem() * deliveriesUsed[x].GetDeliveryItems() << setw(15) << ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems() << "\n";
+        cout << right << setw(10) << deliveriesUsed[x].GetDeliveryID() << setw(15) << deliveriesUsed[x].GetDeliveryItems() << setw(15) << deliveriesUsed[x].GetCostPerItem() << setw(25) << deliveriesUsed[x].GetCostPerItem() * deliveriesUsed[x].GetDeliveryItems() << setw(24) << ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems() << "\n";
     }
     
-    
+    cout << "\n";
 }

@@ -1,6 +1,3 @@
-#ifndef ORDER_HEADER
-#define ORDER_HEADER
-
 #include <string>
 
 using namespace std;
@@ -21,5 +18,3 @@ private:
     int qtyNotFilled;
     int GenerateOrderID();
 };
-
-#endif

@@ -1,6 +1,3 @@
-#ifndef DELIVERIES_HEADER
-#define DELIVERIES_HEADER
-
 using namespace std;
 
 class Deliveries {
@@ -19,5 +16,3 @@ private:
     double costPer;
     int GenerateDeliveryID();
 };
-
-#endif

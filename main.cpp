@@ -30,7 +30,7 @@ void MainMenu() {
                 // Create Order
                 int numOfItems;
                 
-                cout << "How many items ordered? ";
+                cout << "\nHow many items ordered? ";
                 cin >> numOfItems;
                 
                 order.SetOrder(numOfItems);
@@ -42,10 +42,10 @@ void MainMenu() {
                 int itemRecieved;
                 double itemCost;
                 
-                cout << "How many items in delivery? ";
+                cout << "\nHow many items in delivery? ";
                 cin >> itemRecieved;
                 
-                cout << "Cost per item? ";
+                cout << "\nCost per item? ";
                 cin >> itemCost;
                 
                 delivery.SetDeliveries(itemRecieved, itemCost);
@@ -54,10 +54,14 @@ void MainMenu() {
                 break;
             case 3:
                 // Fill order
-                cout << "Filling order initiated\n";
+                cout << "\nFilling order initiated\n";
                 
-                warehouse.FillOrder(orders, inventory);
+                if (!orders.IsEmpty())
+                    warehouse.FillOrder(orders, inventory);
+                cout << "There are no more orders to fulfill\n";
                 
+                
+                 
                 break;
             default:
                 break;
