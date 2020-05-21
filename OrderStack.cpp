@@ -1,34 +1,46 @@
 #include "OrderStack.hpp"
 
-OrderStack::OrderStack() {
-    top = -1;
-};
+OrderStack::OrderStack() {};
 
 bool OrderStack::IsEmpty() const {
-    return top == -1;
+    return head == nullptr;
 }
 
-bool OrderStack::IsFull() const {
-    return top == STACK_SIZE - 1;
+bool OrderStack::IsFull(OrderStackNode* node) const {
+    if (!node) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void OrderStack::Push(Order newOrder) {
-    if (IsFull()) {
-        cout << "Cant add anymore orders to the stack\n";
+    OrderStackNode* newHead = new (std::nothrow) OrderStackNode;
+    
+    if (!IsFull(newHead)) {
+        newHead->order = newOrder;
+        newHead->next = head;
+        head = newHead;
     } else {
-        top++;
-        orders[top] = newOrder;
+        cout << "Cant add anymore orders to the stack, low on memory\n";
+        delete newHead;
+        exit(1);
     }
 }
 
 void OrderStack::Pop() {
-    if (IsEmpty())
+    if (IsEmpty()) {
         cout << "Stack is empty\n";
-    top--;
+    } else {
+        OrderStackNode* topNode = head;
+        
+        head = topNode->next;
+        delete topNode;
+    }
 };
 
-Order OrderStack::Peek() {
+OrderStackNode*& OrderStack::Peek() {
     if (IsEmpty())
         cout << "Stack is empty\n";
-    return orders[top];
+    return head;
 };

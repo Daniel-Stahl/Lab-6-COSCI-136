@@ -1,7 +1,6 @@
-#include "Order.hpp"
+#include "OrderStackNode.hpp"
 #include <iostream>
 #include <string>
-#define STACK_SIZE 10
 
 using namespace std;
 
@@ -9,15 +8,13 @@ class OrderStack {
 public:
     OrderStack();
     bool IsEmpty() const;
-    bool IsFull() const;
+    bool IsFull(OrderStackNode* node) const;
     void Push(Order newOrder);
     void Pop();
-    Order Peek();
+    OrderStackNode*& Peek();
     
 private:
-    
-    int top;
-    Order orders[STACK_SIZE];
-    
+    OrderStackNode* head;
+
 };
 

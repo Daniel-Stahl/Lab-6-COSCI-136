@@ -20,10 +20,14 @@ void InventoryStack::Push(Deliveries newDelivery) {
 void InventoryStack::Pop() {
     if (IsEmpty())
         cout << "Inventory is empty\n";
-    inventory[top].SetDeliveryItems(NULL);
     top--;
 };
 
 Deliveries InventoryStack::Peek() {
     return inventory[top];
 };
+
+
+
+
+

@@ -1,18 +1,18 @@
 #include "Warehouse.hpp"
 
 void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
-    Order order = orders.Peek();
-    int qtyMissing = order.GetQtyNotFilled();
+    orderNode = orders.Peek();
+    int qtyMissing = orderNode->order.GetQtyNotFilled();
     Deliveries item = inventory.Peek();
     int items = item.GetDeliveryItems();
-    int orderID = order.GetOrderID();
+    int orderID = orderNode->order.GetOrderID();
     int totalShipped = 0;
     Deliveries testDelivery;
     arraySize = -1;
     Deliveries deliveriesUsed[10];
     
     
-    while(!IsOrderFilled(order) && !inventory.IsEmpty()) {
+    while(!IsOrderFilled() && !inventory.IsEmpty()) {
         arraySize++;
         // exit loop when order is filled
         // when inventory is empty
@@ -22,11 +22,11 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
         
         if (qtyMissing >= items) {
             qtyMissing = qtyMissing - items;
-            order.SetQtyNotFilled(qtyMissing);
+            orderNode->order.SetQtyNotFilled(qtyMissing);
             inventory.Pop();
         } else if (qtyMissing < items) {
             items = items - qtyMissing;
-            order.SetQtyNotFilled(0);
+            orderNode->order.SetQtyNotFilled(0);
             item.SetDeliveryItems(items);
             testDelivery.SetDeliveryItems(qtyMissing);
         }
@@ -35,11 +35,11 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
         totalShipped += testDelivery.GetDeliveryItems();
         
         
-        if (!IsOrderFilled(order) && !inventory.IsEmpty()) {
+        if (!IsOrderFilled() && !inventory.IsEmpty()) {
             item = inventory.Peek();
             items = item.GetDeliveryItems();
 
-        } else if(IsOrderFilled(order)) {
+        } else if(IsOrderFilled()) {
             cout << "Sending Order# " << orderID << " to shipping!\n";
             orders.Pop();
             // Order gets popped off the stack and exit
@@ -50,17 +50,17 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
         }
     }
     
-    PrintOrderDetails(order, totalShipped, deliveriesUsed);
+    PrintOrderDetails(totalShipped, deliveriesUsed);
     
 }
 
-bool Warehouse::IsOrderFilled(Order order) const {
-    if (order.GetQtyNotFilled() == 0)
+bool Warehouse::IsOrderFilled() const {
+    if (orderNode->order.GetQtyNotFilled() == 0)
         return true;
     return false;
 }
 
-void Warehouse::PrintOrderDetails(Order order, int shipment, Deliveries deliveriesUsed[]) {
+void Warehouse::PrintOrderDetails(int shipment, Deliveries deliveriesUsed[]) {
     double warehouseCost = 0;
     double customerCost = 0;
     
@@ -69,10 +69,10 @@ void Warehouse::PrintOrderDetails(Order order, int shipment, Deliveries deliveri
         customerCost += ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems();
     }
     
-    cout << "Order Number: " << order.GetOrderID()
-    << "\nQty to Ordered: " << order.GetOrderItems()
+    cout << "Order Number: " << orderNode->order.GetOrderID()
+    << "\nQty to Ordered: " << orderNode->order.GetOrderItems()
     << "\nShipped this Shipment: " << shipment
-    << "\nQty to be Shipped: " << order.GetQtyNotFilled()
+    << "\nQty to be Shipped: " << orderNode->order.GetQtyNotFilled()
     << "\nTotal cost to the Warehouse: " << warehouseCost
     << "\nTotal cost to the Customer: " << customerCost
     << "\nProfit this Shipment: " << customerCost - warehouseCost

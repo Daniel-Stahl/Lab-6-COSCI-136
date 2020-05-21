@@ -9,10 +9,11 @@ using namespace std;
 class Warehouse {
 public:
     void FillOrder(OrderStack& orders, InventoryStack& inventory);
-    bool IsOrderFilled(Order order) const;
-    void PrintOrderDetails(Order order, int shipment, Deliveries deliveriesUsed[]);
+    bool IsOrderFilled() const;
+    void PrintOrderDetails(int shipment, Deliveries deliveriesUsed[]);
     
 private:
     int arraySize;
+    OrderStackNode* orderNode;
     
 };
