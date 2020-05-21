@@ -2,42 +2,42 @@
 
 void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
     orderNode = orders.Peek();
+    deliveryNode = inventory.Peek();
     int qtyMissing = orderNode->order.GetQtyNotFilled();
-    Deliveries item = inventory.Peek();
-    int items = item.GetDeliveryItems();
+    int deliveryItems = deliveryNode->delivery.GetDeliveryItems();
     int orderID = orderNode->order.GetOrderID();
-    int totalShipped = 0;
-    Deliveries testDelivery;
-    arraySize = -1;
-    Deliveries deliveriesUsed[10];
-    
+    InventoryStackNode* tempDeliveryNode;
+    InventoryStackNode* deliveryUsed;
     
     while(!IsOrderFilled() && !inventory.IsEmpty()) {
-        arraySize++;
         // exit loop when order is filled
         // when inventory is empty
         // order cant be filled
     
-        testDelivery = item;
+        tempDeliveryNode = deliveryNode;
         
-        if (qtyMissing >= items) {
-            qtyMissing = qtyMissing - items;
+        if (qtyMissing >= deliveryItems) {
+            qtyMissing = qtyMissing - deliveryItems;
             orderNode->order.SetQtyNotFilled(qtyMissing);
             inventory.Pop();
-        } else if (qtyMissing < items) {
-            items = items - qtyMissing;
+        } else if (qtyMissing < deliveryItems) {
+            deliveryNode->delivery.SetDeliveryItems(deliveryItems - qtyMissing);
             orderNode->order.SetQtyNotFilled(0);
-            item.SetDeliveryItems(items);
-            testDelivery.SetDeliveryItems(qtyMissing);
+            tempDeliveryNode->delivery.SetDeliveryItems(qtyMissing);
         }
         
-        deliveriesUsed[arraySize] = testDelivery;
-        totalShipped += testDelivery.GetDeliveryItems();
+        deliveryUsed = tempDeliveryNode;
+        deliveryUsed->next = deliveryHead;
+        deliveryHead = deliveryUsed;
+        totalShipped += tempDeliveryNode->delivery.GetDeliveryItems();
+        
+        warehouseCost += tempDeliveryNode->delivery.GetCostPerItem() * tempDeliveryNode->delivery.GetDeliveryItems();
+        customerCost += ((tempDeliveryNode->delivery.GetCostPerItem() * .5) + tempDeliveryNode->delivery.GetCostPerItem()) * tempDeliveryNode->delivery.GetDeliveryItems();
         
         
         if (!IsOrderFilled() && !inventory.IsEmpty()) {
-            item = inventory.Peek();
-            items = item.GetDeliveryItems();
+            deliveryNode = inventory.Peek();
+            deliveryItems = deliveryNode->delivery.GetDeliveryItems();
 
         } else if(IsOrderFilled()) {
             cout << "Sending Order# " << orderID << " to shipping!\n";
@@ -50,7 +50,7 @@ void Warehouse::FillOrder(OrderStack& orders, InventoryStack& inventory) {
         }
     }
     
-    PrintOrderDetails(totalShipped, deliveriesUsed);
+    PrintOrderDetails();
     
 }
 
@@ -60,18 +60,11 @@ bool Warehouse::IsOrderFilled() const {
     return false;
 }
 
-void Warehouse::PrintOrderDetails(int shipment, Deliveries deliveriesUsed[]) {
-    double warehouseCost = 0;
-    double customerCost = 0;
-    
-    for (int x = 0; x <= arraySize; x++) {
-        warehouseCost += deliveriesUsed[x].GetCostPerItem() * deliveriesUsed[x].GetDeliveryItems();
-        customerCost += ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems();
-    }
+void Warehouse::PrintOrderDetails() {
     
     cout << "Order Number: " << orderNode->order.GetOrderID()
     << "\nQty to Ordered: " << orderNode->order.GetOrderItems()
-    << "\nShipped this Shipment: " << shipment
+    << "\nShipped this Shipment: " << totalShipped
     << "\nQty to be Shipped: " << orderNode->order.GetQtyNotFilled()
     << "\nTotal cost to the Warehouse: " << warehouseCost
     << "\nTotal cost to the Customer: " << customerCost
@@ -81,8 +74,16 @@ void Warehouse::PrintOrderDetails(int shipment, Deliveries deliveriesUsed[]) {
     cout << "\nShipment Details:\n"
     << "Delivery #" << setw(15) << "Qty Shipped" << setw(15) << "Unit Price" << setw(25) << "Cost to the Warehouse" << setw(25) << setw(25) << "Cost to the Customer\n";
     
-    for (int x = 0; x <= arraySize; x++) {
-        cout << right << setw(10) << deliveriesUsed[x].GetDeliveryID() << setw(15) << deliveriesUsed[x].GetDeliveryItems() << setw(15) << deliveriesUsed[x].GetCostPerItem() << setw(25) << deliveriesUsed[x].GetCostPerItem() * deliveriesUsed[x].GetDeliveryItems() << setw(24) << ((deliveriesUsed[x].GetCostPerItem() * .5) + deliveriesUsed[x].GetCostPerItem()) * deliveriesUsed[x].GetDeliveryItems() << "\n";
+    while (deliveryHead != nullptr) {
+        cout << right << setw(10) << deliveryHead->delivery.GetDeliveryID()
+        << setw(15) << deliveryHead->delivery.GetDeliveryItems()
+        << setw(15) << deliveryHead->delivery.GetCostPerItem()
+        << setw(25) << deliveryHead->delivery.GetCostPerItem() * deliveryHead->delivery.GetDeliveryItems()
+        << setw(24) << ((deliveryHead->delivery.GetCostPerItem() * .5) + deliveryHead->delivery.GetCostPerItem()) * deliveryHead->delivery.GetDeliveryItems()
+        << "\n";
+        
+        deliveryHead = deliveryHead->next;
+        
     }
     
     cout << "\n";

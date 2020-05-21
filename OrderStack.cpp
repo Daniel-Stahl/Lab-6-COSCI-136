@@ -24,18 +24,16 @@ void OrderStack::Push(Order newOrder) {
     } else {
         cout << "Cant add anymore orders to the stack, low on memory\n";
         delete newHead;
-        exit(1);
     }
 }
 
 void OrderStack::Pop() {
-    if (IsEmpty()) {
-        cout << "Stack is empty\n";
-    } else {
+    if (!IsEmpty()) {
         OrderStackNode* topNode = head;
-        
         head = topNode->next;
         delete topNode;
+    } else {
+        cout << "Stack is empty\n";
     }
 };
 
@@ -44,3 +42,6 @@ OrderStackNode*& OrderStack::Peek() {
         cout << "Stack is empty\n";
     return head;
 };
+
+
+// Delete all nodes

@@ -1,33 +1,49 @@
 #include "InventoryStack.hpp"
 
-InventoryStack::InventoryStack() { top = -1; };
+InventoryStack::InventoryStack() {};
 
 bool InventoryStack::IsEmpty() const {
-    return top == -1;
+    return head == nullptr;
 };
 
-bool InventoryStack::IsFull() const {
-    return top == STACK_SIZE - 1;
+bool InventoryStack::IsFull(InventoryStackNode* node) const {
+    if (!node) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 void InventoryStack::Push(Deliveries newDelivery) {
-    if (IsFull())
-        cout << "Inventory is full\n";
-    top++;
-    inventory[top] = newDelivery;
+    InventoryStackNode* newHead = new (std::nothrow) InventoryStackNode;
+    if (!IsFull(newHead)) {
+        newHead->delivery = newDelivery;
+        newHead->next = head;
+        head = newHead;
+    } else {
+        cout << "Cant add anymore to the inventory, low on memory\n";
+        delete newHead;
+    }
 };
 
 void InventoryStack::Pop() {
+    if (!IsEmpty()) {
+        InventoryStackNode* newHead;
+        newHead = head->next;
+        delete head;
+        head = newHead;
+    } else {
+       cout << "Inventory is empty\n";
+    }
+};
+
+InventoryStackNode*& InventoryStack::Peek() {
     if (IsEmpty())
         cout << "Inventory is empty\n";
-    top--;
+    return head;
 };
 
-Deliveries InventoryStack::Peek() {
-    return inventory[top];
-};
-
-
+// Delete all nodes
 
 
 

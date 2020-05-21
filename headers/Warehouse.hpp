@@ -10,10 +10,14 @@ class Warehouse {
 public:
     void FillOrder(OrderStack& orders, InventoryStack& inventory);
     bool IsOrderFilled() const;
-    void PrintOrderDetails(int shipment, Deliveries deliveriesUsed[]);
+    void PrintOrderDetails();
     
 private:
-    int arraySize;
     OrderStackNode* orderNode;
+    InventoryStackNode* deliveryNode;
+    InventoryStackNode* deliveryHead;
+    double warehouseCost = 0;
+    double customerCost = 0;
+    int totalShipped = 0;
     
 };
