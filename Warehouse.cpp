@@ -2,10 +2,12 @@
 
 void Warehouse::AddOrderToStack() {
     Order newOrder;
-    int numOfItems;
+    int numOfItems = 0;
     
-    cout << "\nHow many items ordered? ";
-    cin >> numOfItems;
+    do {
+        cout << "\nHow many items ordered? ";
+        cin >> numOfItems;
+    } while (numOfItems <= 0);
     
     newOrder.SetOrder(numOfItems);
     orderStack.Push(newOrder);
@@ -13,20 +15,20 @@ void Warehouse::AddOrderToStack() {
 
 void Warehouse::AddDeliveryToStack() {
     Deliveries newDelivery;
-    int itemRecieved;
-    double itemCost;
+    int itemRecieved = 0;
+    double itemCost = 0.0;
     
-    cout << "\nHow many items in delivery? ";
-    cin >> itemRecieved;
-    
-    cout << "\nCost per item? ";
-    cin >> itemCost;
+    do {
+        cout << "\nHow many items in delivery? ";
+        cin >> itemRecieved;
+        
+        cout << "\nCost per item? ";
+        cin >> itemCost;
+    } while (itemRecieved <= 0 || itemCost <= 0.0);
     
     newDelivery.SetDeliveries(itemRecieved, itemCost);
     inventoryStack.Push(newDelivery);
 }
-
-
 
 void Warehouse::FillOrder() {
     if (!orderStack.IsEmpty() && !inventoryStack.IsEmpty()) {
@@ -87,12 +89,12 @@ bool Warehouse::IsOrderFilled(OrderStackNode* orderNode) const {
 
 void Warehouse::PrintOrderDetails(OrderStackNode* orderNode, InventoryStackNode* deliveryHead, int totalShipped, double warehouseCost, double customerCost) {
     
-    cout << "Order Number: " << orderNode->order.GetOrderID() << "\nQty to Ordered: " << orderNode->order.GetOrderItems() << "\nShipped this Shipment: " << totalShipped << "\nQty to be Shipped: " << orderNode->order.GetQtyNotFilled() << "\nTotal cost to the Warehouse: " << warehouseCost << "\nTotal cost to the Customer: " << customerCost << "\nProfit this Shipment: " << customerCost - warehouseCost << "\n";
+    cout << "Order Number: " << orderNode->order.GetOrderID() << "\nQty to Ordered: " << orderNode->order.GetOrderItems() << "\nShipped this Shipment: " << totalShipped << "\nQty to be Shipped: " << orderNode->order.GetQtyNotFilled() << "\nTotal cost to the Warehouse: " << fixed << setprecision(2) << warehouseCost << "\nTotal cost to the Customer: " << customerCost << "\nProfit this Shipment: " << customerCost - warehouseCost << "\n";
     
     cout << "\nShipment Details:\n" << "Delivery #" << setw(15) << "Qty Shipped" << setw(15) << "Unit Price" << setw(25) << "Cost to the Warehouse" << setw(25) << setw(25) << "Cost to the Customer\n";
     
     while (deliveryHead != nullptr) {
-        cout << right << setw(10) << deliveryHead->delivery.GetDeliveryID() << setw(15) << deliveryHead->delivery.GetDeliveryItems() << setw(15) << deliveryHead->delivery.GetCostPerItem() << setw(25) << deliveryHead->delivery.GetCostPerItem() * deliveryHead->delivery.GetDeliveryItems() << setw(24) << ((deliveryHead->delivery.GetCostPerItem() * .5) + deliveryHead->delivery.GetCostPerItem()) * deliveryHead->delivery.GetDeliveryItems() << "\n";
+        cout << right << setw(10) << deliveryHead->delivery.GetDeliveryID() << setw(15) << deliveryHead->delivery.GetDeliveryItems() << setw(15) << fixed << setprecision(2) << deliveryHead->delivery.GetCostPerItem() << setw(25) << deliveryHead->delivery.GetCostPerItem() * deliveryHead->delivery.GetDeliveryItems() << setw(24) << ((deliveryHead->delivery.GetCostPerItem() * .5) + deliveryHead->delivery.GetCostPerItem()) * deliveryHead->delivery.GetDeliveryItems() << "\n";
         
         deliveryHead = deliveryHead->next;
     }
@@ -112,7 +114,7 @@ void Warehouse::PrintOrders() {
             node = node->next;
         }
     } else {
-        cout << "No orders to print\n";
+        cout << "\nNo orders to print\n" << endl;
     }
 }
 

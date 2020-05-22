@@ -39,27 +39,8 @@ void OrderStack::Pop() {
 
 OrderStackNode* OrderStack::Peek() {
     if (IsEmpty()) {
-        cout << "Stack is empty\n";
         return nullptr;
     } else {
         return head;
     }
 };
-
-
-// Delete all nodes
-//void OrderStack::EmptyOrderStack() {
-//    OrderStackNode* tempNode;
-//    
-//    if (!IsEmpty()) {
-//        while (head != nullptr) {
-//            tempNode = head->next;
-//            delete head;
-//            head = tempNode;
-//        }
-//    }
-//}
-//
-//OrderStack::~OrderStack() {
-//    EmptyOrderStack();
-//}

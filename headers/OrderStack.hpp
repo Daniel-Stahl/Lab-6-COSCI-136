@@ -12,8 +12,6 @@ public:
     void Push(Order newOrder);
     void Pop();
     OrderStackNode* Peek();
-    //void EmptyOrderStack();
-    //~OrderStack();
     
 private:
     OrderStackNode* head = nullptr;
