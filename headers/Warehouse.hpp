@@ -14,6 +14,8 @@ public:
     bool IsOrderFilled(OrderStackNode* orderNode) const;
     void PrintOrderDetails(OrderStackNode* orderNode, InventoryStackNode* deliveryHead, int totalShipped, double warehouseCost, double customerCost);
     void PrintOrders();
+    void EmptyStacks();
+    ~Warehouse();
     
 private:
     OrderStack orderStack;

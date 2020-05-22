@@ -47,5 +47,18 @@ InventoryStackNode* InventoryStack::Peek() {
 
 // Delete all nodes
 
-
-
+//void InventoryStack::EmptyInventoryStack() {
+//    InventoryStackNode* tempNode;
+//    
+//    if (!IsEmpty()) {
+//        while (head != nullptr) {
+//            tempNode = head->next;
+//            delete head;
+//            head = tempNode;
+//        }
+//    }
+//}
+//
+//InventoryStack::~InventoryStack() {
+//    EmptyInventoryStack();
+//}

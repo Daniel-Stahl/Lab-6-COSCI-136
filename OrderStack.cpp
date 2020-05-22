@@ -48,3 +48,18 @@ OrderStackNode* OrderStack::Peek() {
 
 
 // Delete all nodes
+//void OrderStack::EmptyOrderStack() {
+//    OrderStackNode* tempNode;
+//    
+//    if (!IsEmpty()) {
+//        while (head != nullptr) {
+//            tempNode = head->next;
+//            delete head;
+//            head = tempNode;
+//        }
+//    }
+//}
+//
+//OrderStack::~OrderStack() {
+//    EmptyOrderStack();
+//}

@@ -12,6 +12,8 @@ public:
     void Push(Deliveries newDelivery);
     void Pop();
     InventoryStackNode* Peek();
+    //void EmptyInventoryStack();
+    //~InventoryStack();
     
 private:
     InventoryStackNode* head = nullptr;

@@ -104,12 +104,38 @@ void Warehouse::PrintOrders() {
     OrderStackNode* node = orderStack.Peek();
     
     if (node != nullptr) {
+        cout << "Order#" << setw(20) <<"Amount Ordered" << setw(20) << "Qty Remaining\n";
+        
         while (node != nullptr) {
-            cout << "Order ID: " << node->order.GetOrderID() << "\n";
+            cout << right << setw(6) << node->order.GetOrderID() << setw(20) << node->order.GetOrderItems() << setw(19) << node->order.GetQtyNotFilled() << "\n";
             
             node = node->next;
         }
     } else {
         cout << "No orders to print\n";
     }
+}
+
+void Warehouse::EmptyStacks() {
+    if (!orderStack.IsEmpty()) {
+        OrderStackNode* tempOrderHead = orderStack.Peek();
+        
+        while (tempOrderHead != nullptr) {
+            tempOrderHead = tempOrderHead->next;
+            orderStack.Pop();
+        }
+    }
+
+    if (!inventoryStack.IsEmpty()) {
+        InventoryStackNode* tempInventoryHead = inventoryStack.Peek();
+
+        while (tempInventoryHead != nullptr) {
+            tempInventoryHead = tempInventoryHead->next;
+            inventoryStack.Pop();
+        }
+    }
+}
+
+Warehouse::~Warehouse() {
+    EmptyStacks();
 }
