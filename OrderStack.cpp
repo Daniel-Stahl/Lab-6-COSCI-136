@@ -37,10 +37,13 @@ void OrderStack::Pop() {
     }
 };
 
-OrderStackNode*& OrderStack::Peek() {
-    if (IsEmpty())
+OrderStackNode* OrderStack::Peek() {
+    if (IsEmpty()) {
         cout << "Stack is empty\n";
-    return head;
+        return nullptr;
+    } else {
+        return head;
+    }
 };
 
 

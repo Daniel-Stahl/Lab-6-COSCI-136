@@ -28,19 +28,21 @@ void InventoryStack::Push(Deliveries newDelivery) {
 
 void InventoryStack::Pop() {
     if (!IsEmpty()) {
-        InventoryStackNode* newHead;
-        newHead = head->next;
-        delete head;
-        head = newHead;
+        InventoryStackNode* topNode = head;
+        head = topNode->next;
+        delete topNode;
     } else {
        cout << "Inventory is empty\n";
     }
 };
 
-InventoryStackNode*& InventoryStack::Peek() {
-    if (IsEmpty())
+InventoryStackNode* InventoryStack::Peek() {
+    if (IsEmpty()) {
         cout << "Inventory is empty\n";
-    return head;
+        return nullptr;
+    } else {
+        return head;
+    }
 };
 
 // Delete all nodes

@@ -11,9 +11,9 @@ public:
     bool IsFull(InventoryStackNode* node) const;
     void Push(Deliveries newDelivery);
     void Pop();
-    InventoryStackNode*& Peek();
+    InventoryStackNode* Peek();
     
 private:
-    InventoryStackNode* head;
+    InventoryStackNode* head = nullptr;
     
 };

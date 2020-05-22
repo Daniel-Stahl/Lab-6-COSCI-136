@@ -11,10 +11,10 @@ public:
     bool IsFull(OrderStackNode* node) const;
     void Push(Order newOrder);
     void Pop();
-    OrderStackNode*& Peek();
+    OrderStackNode* Peek();
     
 private:
-    OrderStackNode* head;
+    OrderStackNode* head = nullptr;
 
 };
 

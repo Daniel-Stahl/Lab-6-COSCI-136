@@ -8,16 +8,14 @@ using namespace std;
 
 class Warehouse {
 public:
-    void FillOrder(OrderStack& orders, InventoryStack& inventory);
-    bool IsOrderFilled() const;
-    void PrintOrderDetails();
+    void AddOrderToStack();
+    void AddDeliveryToStack();
+    void FillOrder();
+    bool IsOrderFilled(OrderStackNode* orderNode) const;
+    void PrintOrderDetails(OrderStackNode* orderNode, InventoryStackNode* deliveryHead, int totalShipped, double warehouseCost, double customerCost);
+    void PrintOrders();
     
 private:
-    OrderStackNode* orderNode;
-    InventoryStackNode* deliveryNode;
-    InventoryStackNode* deliveryHead;
-    double warehouseCost = 0;
-    double customerCost = 0;
-    int totalShipped = 0;
-    
+    OrderStack orderStack;
+    InventoryStack inventoryStack;
 };
