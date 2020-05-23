@@ -15,6 +15,6 @@ public:
     
 private:
     OrderStackNode* head = nullptr;
-
+    OrderStackNode* tail = nullptr;
 };
 

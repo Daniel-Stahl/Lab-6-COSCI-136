@@ -15,15 +15,20 @@ bool OrderStack::IsFull(OrderStackNode* node) const {
 }
 
 void OrderStack::Push(Order newOrder) {
-    OrderStackNode* newHead = new (std::nothrow) OrderStackNode;
+    OrderStackNode* newNode = new (std::nothrow) OrderStackNode;
     
-    if (!IsFull(newHead)) {
-        newHead->order = newOrder;
-        newHead->next = head;
-        head = newHead;
+    if (!IsFull(newNode)) {
+        newNode->order = newOrder;
+        
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = tail->next;
+        }
     } else {
         cout << "Cant add anymore orders to the stack, low on memory\n";
-        delete newHead;
     }
 }
 

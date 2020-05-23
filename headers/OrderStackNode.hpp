@@ -3,4 +3,5 @@
 struct OrderStackNode {
     Order order;
     OrderStackNode* next;
+    OrderStackNode* prev;
 };
