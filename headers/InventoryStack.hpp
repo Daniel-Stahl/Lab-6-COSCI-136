@@ -15,5 +15,6 @@ public:
     
 private:
     InventoryStackNode* head = nullptr;
+    InventoryStackNode* tail = nullptr;
     
 };

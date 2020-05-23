@@ -19,6 +19,7 @@ void OrderStack::Push(Order newOrder) {
     
     if (!IsFull(newNode)) {
         newNode->order = newOrder;
+        newNode->next = nullptr;
         
         if (head == nullptr) {
             head = newNode;

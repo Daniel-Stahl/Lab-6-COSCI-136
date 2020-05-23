@@ -15,14 +15,21 @@ bool InventoryStack::IsFull(InventoryStackNode* node) const {
 };
 
 void InventoryStack::Push(Deliveries newDelivery) {
-    InventoryStackNode* newHead = new (std::nothrow) InventoryStackNode;
-    if (!IsFull(newHead)) {
-        newHead->delivery = newDelivery;
-        newHead->next = head;
-        head = newHead;
+    InventoryStackNode* newNode = new (std::nothrow) InventoryStackNode;
+    
+    if (!IsFull(newNode)) {
+        newNode->delivery = newDelivery;
+        newNode->next = nullptr;
+        
+        if (head == nullptr) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = tail->next;
+        }
     } else {
-        cout << "Cant add anymore to the inventory, low on memory\n";
-        delete newHead;
+        cout << "Cant add anymore orders to the stack, low on memory\n";
     }
 };
 
