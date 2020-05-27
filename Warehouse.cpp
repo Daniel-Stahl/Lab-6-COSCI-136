@@ -7,10 +7,16 @@ void Warehouse::AddOrderToStack() {
     do {
         cout << "\nHow many items ordered? ";
         cin >> numOfItems;
+        
+        if (numOfItems <= 0) {
+            cout << "\nError: Orders must have items higher than 0, please try again.\n";
+        }
+        
     } while (numOfItems <= 0);
     
     newOrder.SetOrder(numOfItems);
     orderStack.Push(newOrder);
+    FillOrder();
 }
 
 void Warehouse::AddDeliveryToStack() {
@@ -24,10 +30,16 @@ void Warehouse::AddDeliveryToStack() {
         
         cout << "\nCost per item? ";
         cin >> itemCost;
+        
+        if (itemRecieved <= 0 || itemCost <= 0.0) {
+            cout << "\nError: Items recieved and cost must be higher than 0, please try again.\n";
+        }
+        
     } while (itemRecieved <= 0 || itemCost <= 0.0);
     
     newDelivery.SetDeliveries(itemRecieved, itemCost);
     inventoryStack.Push(newDelivery);
+    FillOrder();
 }
 
 void Warehouse::FillOrder() {
@@ -35,7 +47,8 @@ void Warehouse::FillOrder() {
         OrderStackNode* orderNode = orderStack.Peek();
         InventoryStackNode* deliveryNode = inventoryStack.Peek();
         InventoryStackNode* tempDeliveryNode;
-        InventoryStackNode* deliveryHead = nullptr;
+        InventoryStackNode *deliveryHead = nullptr;
+        InventoryStackNode *deliveryTail = nullptr;
         int qtyMissing = orderNode->order.GetQtyNotFilled();
         int deliveryItems = deliveryNode->delivery.GetDeliveryItems();
         int orderID = orderNode->order.GetOrderID();
@@ -44,7 +57,7 @@ void Warehouse::FillOrder() {
         double customerCost = 0;
         
         while(!IsOrderFilled(orderNode) && !inventoryStack.IsEmpty()) {
-            InventoryStackNode* tempHead = new InventoryStackNode;
+            InventoryStackNode* tempHead;
             tempDeliveryNode = deliveryNode;
             
             if (qtyMissing >= deliveryItems) {
@@ -57,9 +70,20 @@ void Warehouse::FillOrder() {
                 tempDeliveryNode->delivery.SetDeliveryItems(qtyMissing);
             }
             
-            tempHead->delivery = tempDeliveryNode->delivery;
-            tempHead->next = deliveryHead;
-            deliveryHead = tempHead;
+            tempDeliveryNode->next = nullptr;
+            
+            if (deliveryHead == nullptr) {
+                deliveryHead = tempDeliveryNode;
+                deliveryTail = tempDeliveryNode;
+            } else {
+                deliveryTail->next = tempDeliveryNode;
+                deliveryTail = deliveryTail->next;
+            }
+            //tempDeliveryNode->next = deliveryHead;
+            
+//            tempHead = tempDeliveryNode;
+//            tempHead->next = deliveryHead;
+//            deliveryHead = tempHead;
             totalShipped += tempDeliveryNode->delivery.GetDeliveryItems();
             warehouseCost += tempDeliveryNode->delivery.GetCostPerItem() * tempDeliveryNode->delivery.GetDeliveryItems();
             customerCost += ((tempDeliveryNode->delivery.GetCostPerItem() * .5) + tempDeliveryNode->delivery.GetCostPerItem()) * tempDeliveryNode->delivery.GetDeliveryItems();
@@ -106,13 +130,33 @@ void Warehouse::PrintOrders() {
     OrderStackNode* node = orderStack.Peek();
     
     if (node != nullptr) {
-        cout << "Order#" << setw(20) <<"Amount Ordered" << setw(20) << "Qty Remaining\n";
+        cout << "\nOrder#" << setw(20) <<"Amount Ordered" << setw(20) << "Qty Remaining\n";
         
         while (node != nullptr) {
             cout << right << setw(6) << node->order.GetOrderID() << setw(20) << node->order.GetOrderItems() << setw(19) << node->order.GetQtyNotFilled() << "\n";
             
             node = node->next;
         }
+        
+        cout << "\n";
+    } else {
+        cout << "\nNo orders to print\n" << endl;
+    }
+}
+
+void Warehouse::PrintInventory() {
+    InventoryStackNode* node = inventoryStack.Peek();
+    
+    if (node != nullptr) {
+        cout << "\nDelivery#" << setw(20) <<"QTY" << setw(20) << "Cost\n";
+        
+        while (node != nullptr) {
+            cout << right << setw(9) << node->delivery.GetDeliveryID() << setw(20) << node->delivery.GetDeliveryItems() << setw(19) << fixed << setprecision(2) << node->delivery.GetCostPerItem() << "\n";
+            
+            node = node->next;
+        }
+        
+        cout << "\n";
     } else {
         cout << "\nNo orders to print\n" << endl;
     }
