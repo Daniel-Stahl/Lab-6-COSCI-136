@@ -47,15 +47,15 @@ void Warehouse::FillOrder() {
         OrderStackNode* orderNode = orderStack.Peek();
         InventoryStackNode* deliveryNode = inventoryStack.Peek();
         InventoryStackNode tempDeliveryNode;
-        int qtyMissing = orderNode->order.GetQtyNotFilled();
-        int deliveryItems = deliveryNode->delivery.GetDeliveryItems();
-        int orderID = orderNode->order.GetOrderID();
         int totalShipped = 0;
         double warehouseCost = 0;
         double customerCost = 0;
         vector<Deliveries>usedDeliveries;
         
-        while(!IsOrderFilled(orderNode) && !inventoryStack.IsEmpty()) {
+        while(!orderStack.IsEmpty() && !inventoryStack.IsEmpty()) {
+            int qtyMissing = orderNode->order.GetQtyNotFilled();
+            int deliveryItems = deliveryNode->delivery.GetDeliveryItems();
+            int orderID = orderNode->order.GetOrderID();
             tempDeliveryNode = *deliveryNode;
             
             if (qtyMissing >= deliveryItems) {
@@ -80,12 +80,17 @@ void Warehouse::FillOrder() {
             } else if(IsOrderFilled(orderNode)) {
                 cout << "Sending Order# " << orderID << " to shipping!\n";
                 orderStack.Pop();
+                PrintOrderDetails(orderNode, usedDeliveries, totalShipped, warehouseCost, customerCost);
+                orderNode = orderStack.Peek();
+                totalShipped = 0;
+                warehouseCost = 0;
+                customerCost = 0;
+                usedDeliveries.clear();
+                deliveryNode = inventoryStack.Peek();
             } else {
-                cout << "Inventory is out of stock/n Order is going back in stack\n";
+                PrintOrderDetails(orderNode, usedDeliveries, totalShipped, warehouseCost, customerCost);
             }
         }
-        
-        PrintOrderDetails(orderNode, usedDeliveries, totalShipped, warehouseCost, customerCost);
     } else {
         cout << "\nOrders are empty or inventory is empty\n";
     }
@@ -146,7 +151,7 @@ void Warehouse::PrintInventory() {
         
         cout << "\n";
     } else {
-        cout << "\nNo orders to print\n" << endl;
+        cout << "\nNo inventory to print\n" << endl;
     }
 }
 

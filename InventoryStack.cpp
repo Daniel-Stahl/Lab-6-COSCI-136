@@ -45,7 +45,6 @@ void InventoryStack::Pop() {
 
 InventoryStackNode* InventoryStack::Peek() {
     if (IsEmpty()) {
-        cout << "Inventory is empty\n";
         return nullptr;
     } else {
         return head;
